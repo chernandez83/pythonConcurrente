@@ -16,20 +16,22 @@ def depositos():
     global BALANCE
     
     for _ in range(0, 1000000):
-        #lock.acquire()
-        with lock: # obtiene y libera el candado
-            BALANCE += 1 # sección crítica
-        #lock.release()
+        try:
+            lock.acquire()
+            BALANCE += 1            
+        finally:
+            lock.release()
 
 
 def retiros():
     global BALANCE
 
     for _ in range(0, 1000000):
-        #lock.acquire()
-        with lock: # obtiene y libera el candado
-            BALANCE -= 1 # sección crítica
-        #lock.release()
+        try:
+            lock.acquire()
+            BALANCE -= 1            
+        finally:
+            lock.release()
 
 if __name__ == '__main__':
     thread1 = threading.Thread(target=depositos)
